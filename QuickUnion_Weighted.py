@@ -19,6 +19,8 @@ class QuickUnionWeighted:
     def union(self, p, q):
         pRoot = self.root(p)
         qRoot = self.root(q)
+        if pRoot == qRoot:
+            return
         if self.size[pRoot] > self.size[qRoot]:
             #attach q to p
             self.id[qRoot] = pRoot
@@ -29,7 +31,9 @@ class QuickUnionWeighted:
             self.size[qRoot] += self.size[pRoot]
     
     def countGroups(self):
-        groups = set(self.id)
+        groups = set()
+        for item in self.id:
+            groups.add(self.root(item))
         return len(groups)
 
 n = 5
@@ -39,3 +43,5 @@ test.union(1,3)
 test.union(2,4)
 print(test.id)
 print(test.countGroups())
+
+
